@@ -3,7 +3,7 @@ name: Deploy to Firebase Hosting on merge
 on:
   push:
     branches:
-      - main # Or your primary deployment branch
+      - main
 
 jobs:
   build_and_deploy:
@@ -12,20 +12,19 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Set up Node.js # It's good practice to specify Node version
+      - name: Set up Node.js # <<<< THIS IS CRITICAL
         uses: actions/setup-node@v4
         with:
-          node-version: '18' # Or '20', or another LTS version you prefer
+          node-version: '20' # Or '20.x' or '22' or '22.x'
 
-      - name: Install Dependencies and Build
+      - name: Install Dependencies and Build # This step will now use Node.js v20
         run: npm ci && npm run build
-        working-directory: ./task-tracker # <--- THIS IS THE KEY CHANGE
+        working-directory: ./task-tracker
 
-      - name: Deploy to Firebase Hosting
+      - name: Deploy to Firebase Hosting # This step should also use Node.js v20 from the environment
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
-          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_TASKTRACKER4ALL }} # Make sure this secret is correctly set in your GitHub repo settings
-          channelId: live # Deploys to your live channel
+          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_TASKTRACKER4ALL }}
+          channelId: live
           projectId: tasktracker4all
-          # The deploy action will use your firebase.json to determine the public directory
