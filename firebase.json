@@ -1,0 +1,12 @@
+{
+  "hosting": {
+    "public": "task-tracker", 
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ]
+    // ... other hosting rules like rewrites if you added them
+  }
+  // ... other firebase services if any
+}

@@ -1,0 +1,33 @@
+% theme_colors.tex
+\usepackage{xcolor}
+\usepackage{ifthen}
+
+% Theme Selector
+\newcommand{\theme}{light} % Options: light, dark, ey
+
+% Light Theme Colors
+\ifthenelse{\equal{\theme}{light}}{
+    \definecolor{backgroundColor}{HTML}{FFFFFF}
+    \definecolor{textColor}{RGB}{34,34,34}
+    \definecolor{primaryColor}{RGB}{0,102,204}
+    \definecolor{sectionColor}{RGB}{0,0,0}
+    \definecolor{linkColor}{RGB}{0,102,204}
+}{}
+
+% Dark Theme Colors
+\ifthenelse{\equal{\theme}{dark}}{
+    \definecolor{backgroundColor}{HTML}{1E1E1E}
+    \definecolor{textColor}{HTML}{D4D4D4}
+    \definecolor{primaryColor}{HTML}{569CD6}
+    \definecolor{sectionColor}{HTML}{CCCCCC}
+    \definecolor{linkColor}{HTML}{9CDCFE}
+}{}
+
+% EY Corporate Theme Colors
+\ifthenelse{\equal{\theme}{ey}}{
+    \definecolor{backgroundColor}{HTML}{FFFFFF}
+    \definecolor{textColor}{RGB}{34,34,34}
+    \definecolor{primaryColor}{RGB}{255,221,0}
+    \definecolor{sectionColor}{RGB}{34,34,34}
+    \definecolor{linkColor}{RGB}{255,221,0}
+}{}

@@ -1,0 +1,27 @@
+venv-genesis/
+/venv-genesis/ 
+task-tracker/venv-genesis/
+test.ipynb
+test01.py
+node_modules/
+backend/
+business-plan.md
+frontend/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+firebase-debug.log*
+firebase-debug.*.log*
+
+# Firebase cache
+.firebase/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
