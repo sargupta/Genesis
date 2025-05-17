@@ -1,33 +1,31 @@
-# Inside .github/workflows/your-workflow-file.yml
-# ... (other parts of your workflow like checkout) ...
+name: Deploy to Firebase Hosting on merge
 
-- name: Build and Deploy
-  # ... (other settings for this step)
-  run: |
-    cd task-tracker  # <--- ADD THIS LINE to change directory
-    npm ci
-    npm run build
-    # The firebase deploy command might also need to be aware, 
-    # but usually, if firebase.json is configured correctly (Step 1), 
-    # the deploy command from the root should work.
-    # However, it's often cleaner to run deploy from the context
-    # where firebase.json is if it's a complex setup.
-    # For now, let's assume the firebase deploy action handles it based on firebase.json.
-    # If firebase deploy is a separate step later, ensure it also respects the project structure.
+on:
+  push:
+    branches:
+      - main # Or your primary deployment branch
 
-# OR, many actions allow specifying a working directory for the step:
-- name: Build Project
-  uses: actions/setup-node@v3 # Or whatever action you use to setup Node
-  # ... with: node-version: '...' ...
-- name: Install Dependencies & Build
-  run: npm ci && npm run build
-  working-directory: ./task-tracker # <--- ADD THIS PROPERTY
+jobs:
+  build_and_deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
 
-- name: Deploy to Firebase Hosting
-  uses: FirebaseExtended/action-hosting-deploy@v0
-  with:
-    repoToken: '${{ secrets.GITHUB_TOKEN }}'
-    firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_TASKTRACKER4ALL }}' # Ensure this secret is set in GitHub
-    channelId: live
-    projectId: tasktracker4all 
-    # The action should respect firebase.json's "public" directory setting.
+      - name: Set up Node.js # It's good practice to specify Node version
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18' # Or '20', or another LTS version you prefer
+
+      - name: Install Dependencies and Build
+        run: npm ci && npm run build
+        working-directory: ./task-tracker # <--- THIS IS THE KEY CHANGE
+
+      - name: Deploy to Firebase Hosting
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: ${{ secrets.GITHUB_TOKEN }}
+          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_TASKTRACKER4ALL }} # Make sure this secret is correctly set in your GitHub repo settings
+          channelId: live # Deploys to your live channel
+          projectId: tasktracker4all
+          # The deploy action will use your firebase.json to determine the public directory
