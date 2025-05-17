@@ -4,7 +4,8 @@ A real-time, interactive Kanban board application to help you manage your tasks 
 
 **Live Demo:** [https://tasktracker4all.web.app](https://tasktracker4all.web.app)
 
-*(Optional: You can add a screenshot of your application here)*
+![Kanban Task Tracker Screenshot](assets/screenshot.png)
+
 ## Overview
 
 This application provides a visual way to track tasks through different stages of completion: "To Do", "In Progress", and "Done". Tasks are stored in real-time in a Firebase Firestore database, meaning changes are reflected instantly across any open instances of the app. The user interface is designed to be clean and intuitive, drawing inspiration from modern task management tools.
